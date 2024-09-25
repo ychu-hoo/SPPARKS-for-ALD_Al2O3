@@ -161,7 +161,7 @@ void AppAldZno::input_app(char *command, int narg, char **arg)
       else if (strcmp(arg[1],"OAl") == 0) sinput[none] = OAl;
       else if (strcmp(arg[1],"OAlX") == 0) sinput[none] = OAlX;
       else if (strcmp(arg[1],"OAlX2") == 0) sinput[none] = OAlX2;
-	
+  
       else error->all(FLERR,"Illegal event arg1 command");
 
       if (strcmp(arg[2],"O") == 0) soutput[none] = O;
@@ -267,7 +267,7 @@ void AppAldZno::input_app(char *command, int narg, char **arg)
       else if (strcmp(arg[2],"OAl") == 0) doutput[ntwo][0] = OAl;
       else if (strcmp(arg[2],"OAlX") == 0) doutput[ntwo][0] = OAlX;
       else if (strcmp(arg[2],"OAlX2") == 0) doutput[ntwo][0] = OAlX2;
-	
+  
       else error->all(FLERR,"Illegal event command2");
 
       if (strcmp(arg[3],"O") == 0) dinput[ntwo][1] = O;
@@ -298,7 +298,7 @@ void AppAldZno::input_app(char *command, int narg, char **arg)
       else if (strcmp(arg[3],"OAl") == 0) dinput[ntwo][1] = OAl;
       else if (strcmp(arg[3],"OAlX") == 0) dinput[ntwo][1] = OAlX;
       else if (strcmp(arg[3],"OAlX2") == 0) dinput[ntwo][1] = OAlX2;
-	
+  
       else error->all(FLERR,"Illegal event command2");
 
       if (strcmp(arg[4],"O") == 0) doutput[ntwo][1] = O;
@@ -594,8 +594,8 @@ double AppAldZno::site_propensity(int i)
   for (m = 0; m < none; m++) {
     if (element[i] != sinput[m]) continue;
     if ((coord[i] == scoord[m] || scoord[m] == 0) && (spresson[m] == pressureOn || spresson[m] == 0)) {
-	    add_event(i,1,m,spropensity[m],-1,-1);
-	    proball += spropensity[m];
+      add_event(i,1,m,spropensity[m],-1,-1);
+      proball += spropensity[m];
     }
   }
 
@@ -610,18 +610,18 @@ double AppAldZno::site_propensity(int i)
             k = neighbor[j][kk];
             if (i == k) continue;
             for (m = 0; m < ntwo; m++) {
-	    if ((element[i] == dinput [m][0] && element[k] == dinput [m][1]) && (dpresson[m] == pressureOn || dpresson[m] == 0) && (coord[i] == dcoord[m] || dcoord[m] == 0)) {
-  	      comevent = 1;
-  	      for (int ii = 0; ii < nextneib; ii++) {
-  	      if ( comneigh[ii][0] == k && comneigh[ii][1] == dpropensity[m]) comevent = 0;
-  	      }
-  	      if (comevent){	
+      if ((element[i] == dinput [m][0] && element[k] == dinput [m][1]) && (dpresson[m] == pressureOn || dpresson[m] == 0) && (coord[i] == dcoord[m] || dcoord[m] == 0)) {
+          comevent = 1;
+          for (int ii = 0; ii < nextneib; ii++) {
+          if ( comneigh[ii][0] == k && comneigh[ii][1] == dpropensity[m]) comevent = 0;
+          }
+          if (comevent){	
                 add_event(i,2,m,dpropensity[m],-1,k);
                 proball += dpropensity[m];
-  	        comneigh[nextneib][0] = k;
+            comneigh[nextneib][0] = k;
                 comneigh[nextneib][1] = dpropensity[m];
-  	        nextneib++;
-  	    } 
+            nextneib++;
+        } 
           }
         }
       }
@@ -635,9 +635,9 @@ double AppAldZno::site_propensity(int i)
     j = neighbor[i][jj];
       for (m =0; m < nthree; m++) {
 //	if (element[i] == vinput[m][0] && element[j] == vinput[m][1] && (coord[i] == vcoord[m] || vcoord[m] == 0) && (dpresson[m] == pressureOn || dpresson[m] == 0)) { // Zero cn does not allow reaction
-	if (element[i] == vinput[m][0] && element[j] == vinput[m][1] && (coord[i] == vcoord[m] ) && (dpresson[m] == pressureOn || dpresson[m] == 0)) {
-	add_event(i,3,m,vpropensity[m],j,-1);
-	proball += vpropensity[m];
+  if (element[i] == vinput[m][0] && element[j] == vinput[m][1] && (coord[i] == vcoord[m] ) && (dpresson[m] == pressureOn || dpresson[m] == 0)) {
+  add_event(i,3,m,vpropensity[m],j,-1);
+  proball += vpropensity[m];
       }
     }
   }
@@ -688,8 +688,8 @@ void AppAldZno::site_event(int i, class RandomPark *random)
     vcount[which]++;
     }
   else {printf("Illegal execution event i %d %d %d j %d %d %d k %d %d %d", i, element[i], coord[i], j, element[j], coord[j], k, element[k], coord[k]);
-	fflush(stdout); 
-	error->all(FLERR,"Illegal execution event"); }
+  fflush(stdout); 
+  error->all(FLERR,"Illegal execution event"); }
 
   update_coord(elcoord,i,j,k,which);
 
@@ -808,7 +808,7 @@ void AppAldZno::clear_events(int i)
 ------------------------------------------------------------------------- */
 
 void AppAldZno::add_event(int i, int rstyle, int which, double propensity,
-			  int jpartner, int kpartner)
+        int jpartner, int kpartner)
 {
   if (nevents == maxevent) {
     maxevent += DELTAEVENT;
@@ -905,18 +905,18 @@ void AppAldZno::grow_reactions(int rstyle)
 ------------------------------------------------------------------------- */
 void AppAldZno::update_coord(int elcoord, int i, int j, int k, int which)
 {
-  // adsorption of TMA 
+  // adsorption of TMA yes
   if ((elcoord == O || elcoord == OH || elcoord == OH2) && (element[i] == AlX3O || element[i] == AlX3OH || element[i] == AlX3OH2) && (j == -1)){
     coord[i]=coord[i]+1;
     put_mask(i);
   }
-  // desorption of TMA
+  // desorption of TMA yes
   else if ((elcoord == AlX3O || elcoord == AlX3OH || elcoord == AlX3OH2) && (element[i] == O || element[i] == OH || element[i] == OH2) && (j == -1)){
     coord[i]=coord[i]-1;
     remove_mask(i);
     // count_coordO(i);
   }
-  // Ligand elimination from TMA
+  // Ligand elimination from TMA yes
   else if ((elcoord == AlX3OH || elcoord == AlX3OH2) && (element[i] == AlX2O || element[i] == AlX2OH) && (j == -1)){
     remove_mask(i);
     put_mask(i);
@@ -925,7 +925,7 @@ void AppAldZno::update_coord(int elcoord, int i, int j, int k, int which)
     remove_mask(i);
     put_mask(i);
   }
-  // Ligand elimination from DMA
+  // Ligand elimination from DMA yes
   else if ((elcoord == AlX2OH || elcoord == AlX2OH2) && (element[i] == AlXO || element[i] == AlXOH) && (j == -1)){
     remove_mask(i);
     put_mask(i);
@@ -934,42 +934,42 @@ void AppAldZno::update_coord(int elcoord, int i, int j, int k, int which)
     remove_mask(i);
     put_mask(i);
   }
-  // Ligand elimination from MMA
+  // Ligand elimination from MMA yes
   else if ((elcoord == AlXOH || elcoord == AlXOH2) && (element[i] == AlO || element[i] == AlOH) && (j == -1)){
     remove_mask(i);
   }
   else if ((elcoord == AlXO || elcoord == AlXOH || elcoord == AlXOH2) && (element[i] == AlO || element[i] == AlOH || element[i] == AlOH2) && (element[k] == OH || element[k] == O) && (j == -1)){
     remove_mask(i);
   }
-  // TMA dissociation on the surface
+  // TMA dissociation on the surface yes
   else if ((elcoord == AlX3O || elcoord == AlX3OH || elcoord == AlX3OH2) && (element[i] == AlX2O || element[i] == AlX2OH || element[i] == AlX2OH2) && ( element[j] == AlX )){
     remove_mask(i);
     put_mask(i);
     coord[j]=coord[j]+1;
     put_mask(j);
   }
-  // DMA dissociation on the surface
+  // DMA dissociation on the surface yes
   else if ((elcoord == AlX2O || elcoord == AlX2OH || elcoord == AlX2OH2) && (element[i] == AlXO || element[i] == AlXOH || element[i] == AlXOH2) && ( element[j] == AlX )){
     remove_mask(i);
     put_mask(i);
     coord[j]=coord[j]+1;
     put_mask(j);
   }
-  // MMA dissociation on the surface
+  // MMA dissociation on the surface yes
   else if ((elcoord == AlXO || elcoord == AlXOH || elcoord == AlXOH2) && (element[i] == AlO || element[i] == AlOH || element[i] == AlOH2) && ( element[j] == AlX )){
     remove_mask(i);
     coord[j]=coord[j]+1;
     put_mask(j);
   }
-  // water adsorption typeI
+  // water adsorption typeI yes
   else if ((elcoord == Al || elcoord == AlX || elcoord == AlX2) && (element[i] == OH2Al || element[i] == OH2AlX || element[i] == OH2AlX2) && ( j == -1 )) {
     coord[i]=coord[i]+1;
   }
-  // water desorption typeI
+  // water desorption typeI yes
   else if ((elcoord == OH2Al || elcoord == OH2AlX || elcoord == OH2AlX2) && (element[i] == Al || element[i] == AlX || element[i] == AlX2) && ( j == -1 )) {
     coord[i]=coord[i]-1;
   }
-  // water desorption typeII
+  // water desorption typeII no
   else if ((elcoord == OH2) && (element[i] == VACANCY) && ( j == -1 )) {
     count_coord(i);
   }  
@@ -984,6 +984,16 @@ void AppAldZno::update_coord(int elcoord, int i, int j, int k, int which)
       coord[j]=coord[j]-1;
     }
   }
+  // MMA with H2O, event I
+  else if ((elcoord == OH2AlX || elcoord == OHAlX) && (element[i] == OHAl || element[i] == OAl ) && (j == -1 ) ) { 
+    remove_mask(i);
+    coord[i]=coord[i]-1;
+    }
+  // DMA with H2O, event I
+  // else if ((elcoord == OH2AlX2 || elcoord == OHAlX2) && (element[i] == OHAlX || element[i] == OAlX ) && (j == -1 ) ) { 
+  //   remove_mask(i);
+  //   put_mask(i);
+  //   }
   // Al densification
   else if ((elcoord == VACANCY) && (element[i] == Al || element[i] == AlX || element[i] == AlX2) && (element[j] == O || element[j] == OH || element[j] == OH2)) {
     if (element[i] == AlX || element[i] == AlX2){
@@ -994,86 +1004,42 @@ void AppAldZno::update_coord(int elcoord, int i, int j, int k, int which)
       put_mask(i)
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-	if ((elcoord == O || elcoord == OH || elcoord == OH2) && (element[i] == ZnX2O || element[i] == ZnX2OH || element[i] == ZnX2OH2) && (j == -1 )) { // Adsorption of DEZ, event I
-		coord[i]=coord[i]+1;
-		put_mask(i);
-	}
-	else if ((elcoord == ZnX2O || elcoord == ZnX2OH || elcoord == ZnX2OH2) && (element[i] == O || element[i] == OH || element[i] == OH2) && (j == -1 )){ // Desorption of DEZ, event I
-		coord[i]=coord[i]-1;
-		remove_mask(i);
-		count_coordO(i);
-	}
-    else if ((elcoord == ZnX2O || elcoord == ZnX2OH || elcoord == ZnX2OH2) && (element[i] == ZnXO || element[i] == ZnXOH ) && (element[k] == OH2 || element[k] == OH || element[k] == O ) && ( j == -1 )){ // DEZ with H2O, event II
-        remove_mask(i);
-        put_mask(i);
+  // Al reverse densification
+  else if ((elcoord == Al || elcoord == AlX || elcoord == AlX2) && (element[i] == VACANCY) && (element[j] >= AlX2O && element[j] <= AlOH2)) {
+    if (elcoord == Al){
+      count_coord(i, j); // ********* //
     }
-	else if ((elcoord == ZnX2O || elcoord == ZnX2OH || elcoord == ZnX2OH2) && (element[i] == ZnXO || element[i] == ZnXOH ) && ( element[j] == ZnX )){ // DEZ dissociation, event III
-        remove_mask(i);
-        put_mask(i);
-		coord[j]=coord[j]+1;
-		put_mask(j);
+    else {
+      remove_mask(i, j);
+      count_coord(i, j);
+      put_mask(j);
     }
-    else if ((elcoord == OH2ZnX || elcoord == OHZnX ) && (element[i] == OH2Zn || element[i] == OHZn || element[i] == OZn) && (j == -1 ) ) { // MEZ with H2O, event I
-        remove_mask(i);
-        coord[i]=coord[i]-1;
-    }
-	else if ((elcoord == OH || elcoord == OH2) && (element[i] == OH || element[i] == O ) && ( element[j] == Zn ) ) { // MEZ with OH
-        remove_mask(j);
-        coord[j]=coord[j]-1;
-    }
-	else if ((elcoord == VACANCY) && (element[i] == ZnX || element[i] == Zn) && ( element[j] == O || element[j] == OH || element[j] == OH2 )  ) { // Zn densification
-        if (element[i] == ZnX){
-        	remove_mask(i, j); // Remove mask from previous O site
-        }
-        count_coord(j, i);
-        if (element[i] == ZnX){
-            put_mask(i); // Put mask on new Zn site
-        }
-	}
-	else if ((elcoord == ZnX ) && (element[i] == VACANCY ) && ( element[j] == ZnXOH || element[j] == ZnXO) ) { // ZnX reverse densification
-		remove_mask(i, j);
-		count_coord(i, j);
-		put_mask(j);
-	}
-	else if ((elcoord == Zn ) && (element[i] == VACANCY ) && ( element[j] == ZnOH || element[j] == ZnO) ) { // Zn reverse densification 
-        count_coord(j, i);
-        }
-    else if ((elcoord == OH2Zn || elcoord == OHZn || elcoord == OZn) && ( element[i] == Zn ) && (element[j] == O || element[j] == OH || element[j] == OH2 )) { // Oxygen densification
-        count_coord(i, j); // Reversed from normal ordering to avoid mixup in count_coord-function that expects i-> O site, j-> Zn site
-        count_coordO(j);
-    }
-    else if ((elcoord == OH2ZnX || elcoord == OHZnX ) && ( element[i] == ZnX ) && (element[j] == OH || element[j] == OH2 ) && ( k == -1 )) { // Oxygen densification
-        count_coord(i, j); // Reversed from normal ordering to avoid mixup in count_coord-function that expects i-> O site, j-> Zn site
-    }
-    else if ((elcoord == Zn || elcoord == ZnX ) && (element[i] == OH2Zn || element[i] == OH2ZnX ) && ( j == -1 )) { // Adsorption of H2O
-        coord[i]=coord[i]+1;
-    }
-    else if ((elcoord == OH2Zn || elcoord == OH2ZnX ) && (element[i] == Zn || element[i] == ZnX ) && ( j == -1 )) { // Desorption of H2O
-        coord[i]=coord[i]-1;
-    }
-    else if ((elcoord == ZnX ) && ( element[i] == ZnX && element[j] == VACANCY ) ) { // Desorption of H2O
-        count_coord(j, i);
-    }
-    else if ((elcoord == OH2 ) && (element[i] == VACANCY ) && ( j == -1 )){ // Desorption of H2O
-        count_coord(i, j);
-    }
-	else if ((elcoord == O || elcoord == OH || elcoord == OH2) && (element[i] == VACANCY) && (element[j] == OH2ZnX || element[j] == OHZnX || element[j] == OH2Zn || element[j] == OHZn || element[j] == OZn ) ) {// Oxygen reverse densification
-		count_coord(i,j);
-		coord[j]++;
-	}
+  }
+  // OH2 densification
+  else if ((elcoord == OH2Al || elcoord == OHAl || elcoord == OAl) && (element[i] == Al) && (element[j] == O || element[j] == OH || element[j] == OH2)) {
+    count_coord(i, j);
+    // count_coordO(j);
+  }
+  else if ((elcoord == OH2AlX || elcoord == OHAlX || elcoord == OAlX) && (element[i] == AlX) && (element[j] == O || element[j] == OH || element[j] == OH2)) {
+    count_coord(i, j);
+  }
+  else if ((elcoord == OH2AlX2 || elcoord == OHAlX2 || elcoord == OAlX2) && (element[i] == AlX2) && (element[j] == O || element[j] == OH || element[j] == OH2)) {
+    count_coord(i, j);
+  }
+  // OH2 reverse densification
+  else if ((elcoord == O || elcoord == OH || elcoord == OH2) && (element[i] == VACANCY) && (element[j] == OAl || element[j] == OHAl || element[j] == OH2Al)) {
+    count_coord(i, j);
+    // count_coordO(j);
+    coord[j] = coord[j] + 1
+  }
+  else if ((elcoord == O || elcoord == OH || elcoord == OH2) && (element[i] == VACANCY) && (element[j] == OAlX || element[j] == OHAlX || element[j] == OH2AlX)) {
+    count_coord(i, j);
+    coord[j] = coord[j] + 1
+  }
+  else if ((elcoord == O || elcoord == OH || elcoord == OH2) && (element[i] == VACANCY) && (element[j] == OAlX2 || element[j] == OHAlX2 || element[j] == OH2AlX2)) {
+    count_coord(i, j);
+    coord[j] = coord[j] + 1
+  }
 }
 /* ----------------------------------------------------------------------
    put mask for affected sites
@@ -1081,231 +1047,176 @@ void AppAldZno::update_coord(int elcoord, int i, int j, int k, int which)
 
 void AppAldZno::put_mask(int i)
 {
-    int isite = i2site[i];
-	int nsites = 0;
-	esites[nsites++] = isite;
-    echeck[isite] = 1;
-// Add mask on the second neighbor (oxygen) of the DEZ to block adsorption
-	if (element[i] == ZnX2OH2 || element[i] == ZnX2OH || element[i] == ZnX2O ){
-	  	for (int n = 0; n < numneigh[i]; n++) {
-			int nn = neighbor[i][n];
-			isite = i2site[nn];
-			if (isite >= 0 && echeck[isite] == 0) { // Cover first neighbour Zn site
-			    coord[isite]=coord[isite]-20;
-			    esites[nsites++] = isite;
-			    echeck[isite] = 1;
+  int isite = i2site[i];
+  int nsites = 0;
+  esites[nsites++] = isite;
+  echeck[isite] = 1;
+// Add mask on the second neighbor (oxygen) of the TMA to block adsorption
+  if (element[i] == AlX3OH2 || element[i] == AlX3OH || element[i] == AlX3O ){
+      for (int n = 0; n < numneigh[i]; n++) {
+      int nn = neighbor[i][n];
+      isite = i2site[nn];
+      if (isite >= 0 && echeck[isite] == 0) { // Cover first neighbour Al site
+          coord[isite]=coord[isite]-10;
+          esites[nsites++] = isite;
+          echeck[isite] = 1;
                         }
-			for (int k = 0; k < numneigh[nn]; k++){
-				int kk = neighbor[nn][k];
-				isite = i2site[kk];
-				if (isite >= 0 && echeck[isite] == 0) { // Cover second neighbour O site
-					coord[isite]=coord[isite]-10;
-					esites[nsites++] = isite;
-					echeck[isite] = 1;
-				}
-/*				for (int m = 0; m < numneigh[kk]; m++) {
-					int mm = neighbor[kk][m];
-					isite = i2site[mm];
-					if (isite >= 0 && echeck[isite] == 0) { // Cover third neighbour Zn site
-					    coord[isite] = coord[isite]-10;
-					    esites[nsites++] = isite;
-					    echeck[isite] = 1;
-                                        }
-					for (int s = 0; s < numneigh[mm]; s++) {
-						int ss = neighbor[mm][s];
-						isite = i2site[ss];
-						if (isite >= 0 && echeck[isite] == 0) { // Cover fourth neighbour O site
-							coord[isite] = coord[isite]-10;
-							esites[nsites++] = isite;
-							echeck[isite] = 1;
-						}
-					}
-				}
-*/			}
-	    }
-    }
-
-// Add mask to the second neighbor (oxygen) of the DEZ to block adsorption (ZnX reverse densification)
-    else if ( element[i] == ZnXOH || element[i] == ZnXO ){
-        for (int n = 0; n < numneigh[i]; n++) {
-            int nn = neighbor[i][n];
-            isite = i2site[nn];
-            if (isite >= 0 && echeck[isite] == 0) { // Cover first neighbour Zn site
-                coord[isite]=coord[isite]-10;
-                esites[nsites++] = isite;
-                echeck[isite] = 1;
-            }
-            for (int k = 0; k < numneigh[nn]; k++){
-                int kk = neighbor[nn][k];
-                isite = i2site[kk];
-                if (isite >= 0 && echeck[isite] == 0) { // Cover second neighbour O site
-                    coord[isite]=coord[isite]-10;
-                    esites[nsites++] = isite;
-                    echeck[isite] = 1;
-                }
-/*                for (int m = 0; m < numneigh[kk]; m++) {
-                    int mm = neighbor[kk][m];
-                    isite = i2site[mm];
-                    if (isite >= 0 && echeck[isite] == 0) { // Cover third neighbour Zn site
-                        coord[isite] = coord[isite]-10;
-                        esites[nsites++] = isite;
-                        echeck[isite] = 1;
-                    }
-                    for (int s = 0; s < numneigh[mm]; s++) {
-                        int ss = neighbor[mm][s];
-                        isite = i2site[ss];
-                        if (isite >= 0 && echeck[isite] == 0) { // Cover fourth neighbour O site
-                            coord[isite] = coord[isite]-10;
-                            esites[nsites++] = isite;
-                            echeck[isite] = 1;
-                        }
-                    }
-                }
-*/            }
+      for (int k = 0; k < numneigh[nn]; k++){
+        int kk = neighbor[nn][k];
+        isite = i2site[kk];
+        if (isite >= 0 && echeck[isite] == 0) { // Cover second neighbour O site
+          coord[isite]=coord[isite]-10;
+          esites[nsites++] = isite;
+          echeck[isite] = 1;
         }
-    }	
-
-
+      }
+      }
+    }
+// Add mask on the second neighbor (oxygen) of the DMA to block adsorption
+  else if (element[i] == AlX2OH2 || element[i] == AlX2OH || element[i] == AlX2O ){
+      for (int n = 0; n < numneigh[i]; n++) {
+      int nn = neighbor[i][n];
+      isite = i2site[nn];
+      if (isite >= 0 && echeck[isite] == 0) { // Cover first neighbour Al site
+          coord[isite]=coord[isite]-10;
+          esites[nsites++] = isite;
+          echeck[isite] = 1;
+                        }
+      for (int k = 0; k < numneigh[nn]; k++){
+        int kk = neighbor[nn][k];
+        isite = i2site[kk];
+        if (isite >= 0 && echeck[isite] == 0) { // Cover second neighbour O site
+          coord[isite]=coord[isite]-10;
+          esites[nsites++] = isite;
+          echeck[isite] = 1;
+        }
+      }
+      }
+    }
+// Add mask on the second neighbor (oxygen) of the MMA to block adsorption
+  else if (element[i] == AlXOH2 || element[i] == AlXOH || element[i] == AlXO ){
+      for (int n = 0; n < numneigh[i]; n++) {
+      int nn = neighbor[i][n];
+      isite = i2site[nn];
+      if (isite >= 0 && echeck[isite] == 0) { // Cover first neighbour Al site
+          coord[isite]=coord[isite]-10;
+          esites[nsites++] = isite;
+          echeck[isite] = 1;
+                        }
+      for (int k = 0; k < numneigh[nn]; k++){
+        int kk = neighbor[nn][k];
+        isite = i2site[kk];
+        if (isite >= 0 && echeck[isite] == 0) { // Cover second neighbour O site
+          coord[isite]=coord[isite]-10;
+          esites[nsites++] = isite;
+          echeck[isite] = 1;
+        }
+      }
+      }
+    }
 // Add mask to the first neighbor (oxygen) to block adsorption
-	else if ( element[i] == ZnX ){
-	  	for (int n = 0; n < numneigh[i]; n++) {
-			int nn = neighbor[i][n];
-			isite = i2site[nn];
-			if (isite >= 0 && echeck[isite] == 0) { // Cover first neighbour O site
-				coord[isite]=coord[isite]-10;
-				esites[nsites++] = isite;
-				echeck[isite] = 1;
-			}
+  else if ( element[i] == AlX || element[i] == AlX2 ){
+      for (int n = 0; n < numneigh[i]; n++) {
+      int nn = neighbor[i][n];
+      isite = i2site[nn];
+      if (isite >= 0 && echeck[isite] == 0) { // Cover first neighbour O site
+        coord[isite]=coord[isite]-10;
+        esites[nsites++] = isite;
+        echeck[isite] = 1;
+      }
             for (int k = 0; k < numneigh[nn]; k++){
                 int kk = neighbor[nn][k];
                 isite = i2site[kk];
-                if (isite >= 0 && echeck[isite] == 0) { // Cover second neighbour Zn site
+                if (isite >= 0 && echeck[isite] == 0) { // Cover second neighbour Al site
                     coord[isite] = coord[isite]-10;
                     esites[nsites++] = isite;
                     echeck[isite] = 1;
                 }
-/*                for (int m = 0; m < numneigh[kk]; m++) {
-                    int mm = neighbor[kk][m];
-                    isite = i2site[mm];
-                    if (isite >= 0 && echeck[isite] == 0) { // Cover third neighbour Zn site
-                        coord[isite] = coord[isite]-10;
-                        esites[nsites++] = isite;
-                        echeck[isite] = 1;
-                    }
-                    for (int s = 0; s < numneigh[mm]; s++) {
-                        int ss = neighbor[mm][s];
-                        isite = i2site[ss];
-                        if (isite >= 0 && echeck[isite] == 0) { // Cover fourth neighbour O site
-                            coord[isite] = coord[isite]-10;
-                            esites[nsites++] = isite;
-                            echeck[isite] = 1;
-                        }
-                    }
-                }
-*/            }
+
+            }
         }
-	}
-        for (int m = 0; m < nsites; m++)  {echeck[esites[m]] = 0; esites[m]=0;}
+  }
+  for (int m = 0; m < nsites; m++)  {echeck[esites[m]] = 0; esites[m]=0;}
 }
 
 /* ----------------------------------------------------------------------
    remove mask 
 ------------------------------------------------------------------------- */
 
-void AppAldZno::remove_mask(int i, int j) // j flag for when Zn densification
+void AppAldZno::remove_mask(int i, int j) // j flag for when Al densification
 {
-    int isite = i2site[i];
-	int nsites = 0;
-	esites[nsites++] = isite;
-    echeck[isite] = 1;
-// Remove mask from oxygen sites after desorption
-	if ( element[i] == O || element[i] == OH || element[i] == OH2 || element[i] == ZnXO || element[i] == ZnXOH ){
-	  	for (int n = 0; n < numneigh[i]; n++) {
-			int nn = neighbor[i][n];
-			isite = i2site[nn];
-			if (isite >= 0 && echeck[isite] == 0) { // Remove first neighbour Zn site
-                coord[isite]=coord[isite]+20;
+  int isite = i2site[i];
+  int nsites = 0;
+  esites[nsites++] = isite;
+  echeck[isite] = 1;
+
+// Remove mask from oxygen sites after TMA desorption, dissociation and ligand elimination
+  if ( element[i] == O || element[i] == OH || element[i] == OH2 || element[i] == AlX2O || element[i] == AlX2OH || element[i] == AlX2OH2 ){
+      for (int n = 0; n < numneigh[i]; n++) {
+      int nn = neighbor[i][n];
+      isite = i2site[nn];
+      if (isite >= 0 && echeck[isite] == 0) { // Remove first neighbour Al site
+                coord[isite]=coord[isite]+10;
                 esites[nsites++] = isite;
                 echeck[isite] = 1;
             }
-			for (int k = 0; k < numneigh[nn]; k++){
-				int kk = neighbor[nn][k];
-				isite = i2site[kk];
-				if (isite >= 0 && echeck[isite] == 0) { // Remove second neighbour O site
-					coord[isite]=coord[isite]+10;
-					esites[nsites++] = isite;
-					echeck[isite] = 1;
-				}
-/*				for (int m = 0; m < numneigh[kk]; m++) {
-					int mm = neighbor[kk][m];
-					isite = i2site[mm];
-					if (isite >= 0 && echeck[isite] == 0) {// Remove third neighbour Zn site
-					    coord[isite] = coord[isite]+10;
-					    esites[nsites++] = isite;
-					    echeck[isite] = 1;
-                    }
-					for (int s = 0; s < numneigh[mm]; s++) {
-						int ss = neighbor[mm][s];
-						isite = i2site[ss];
-						if (isite >= 0 && echeck[isite] == 0) {// Remove fourth neighbour O site
-							coord[isite] = coord[isite]+10;
-							esites[nsites++] = isite;
-							echeck[isite] = 1;
-						}
-					}
-				}
-*/			}
+      for (int k = 0; k < numneigh[nn]; k++){
+        int kk = neighbor[nn][k];
+        isite = i2site[kk];
+        if (isite >= 0 && echeck[isite] == 0) { // Remove second neighbour O site
+          coord[isite]=coord[isite]+10;
+          esites[nsites++] = isite;
+          echeck[isite] = 1;
         }
-	}
-	
-// Remove mask from the oxygen site after densification
-	else if ( ( element[i] == ZnX && ( element[j] == O || element[j] == OH || element[j] == OH2 )) ){ 
-	    echeck[i2site[i]] = 0;
-	    for (int n = 0; n < numneigh[j]; n++) {
-	        int nn = neighbor[j][n];
-	        isite = i2site[nn];
-	        if (isite >= 0 && echeck[isite] == 0 ) { // Remove first neighbour Zn site
-	            coord[isite]=coord[isite]+10;
+        }
+        }
+  }
+// DMA dissociation and ligand elimination
+  else if ( element[i] == AlXO || element[i] == AlXOH || element[i] == AlXOH2 ){
+      for (int n = 0; n < numneigh[i]; n++) {
+      int nn = neighbor[i][n];
+      isite = i2site[nn];
+      if (isite >= 0 && echeck[isite] == 0) { // Remove first neighbour Al site
+                coord[isite]=coord[isite]+10;
                 esites[nsites++] = isite;
                 echeck[isite] = 1;
             }
-            for (int k = 0; k < numneigh[nn]; k++){
-                int kk = neighbor[nn][k];
-                if(kk != j){
-                    isite = i2site[kk];
-                    if (isite >= 0 && echeck[isite] == 0) { // Remove second neighbour O site
-                        if(isite!=j){coord[isite] = coord[isite]+10;}
-                        esites[nsites++] = isite;
-                        echeck[isite] = 1;
-                    }
-                }
-/*                for (int m = 0; m < numneigh[kk]; m++) {
-					int mm = neighbor[kk][m];
-					isite = i2site[mm];
-					if (isite >= 0 && echeck[isite] == 0) { // Cover third neighbour Zn site
-						coord[isite] = coord[isite]+10;
-						esites[nsites++] = isite;
-						echeck[isite] = 1;
-					}
-					for (int s = 0; s < numneigh[mm]; s++) {
-						int ss = neighbor[mm][s];
-						isite = i2site[ss];
-						if (isite >= 0 && echeck[isite] == 0) { // Cover fourth neighbour O site
-							coord[isite] = coord[isite]+10;
-							esites[nsites++] = isite;
-							echeck[isite] = 1;
-						}
-					}
-				}
-*/            }
+      for (int k = 0; k < numneigh[nn]; k++){
+        int kk = neighbor[nn][k];
+        isite = i2site[kk];
+        if (isite >= 0 && echeck[isite] == 0) { // Remove second neighbour O site
+          coord[isite]=coord[isite]+10;
+          esites[nsites++] = isite;
+          echeck[isite] = 1;
         }
-    }
-	    
-	
+        }
+        }
+  }
+// MMA dissociation and ligand elimination
+  else if ( element[i] == AlO || element[i] == AlOH || element[i] == AlOH2 ){
+      for (int n = 0; n < numneigh[i]; n++) {
+      int nn = neighbor[i][n];
+      isite = i2site[nn];
+      if (isite >= 0 && echeck[isite] == 0) { // Remove first neighbour Al site
+                coord[isite]=coord[isite]+10;
+                esites[nsites++] = isite;
+                echeck[isite] = 1;
+            }
+      for (int k = 0; k < numneigh[nn]; k++){
+        int kk = neighbor[nn][k];
+        isite = i2site[kk];
+        if (isite >= 0 && echeck[isite] == 0) { // Remove second neighbour O site
+          coord[isite]=coord[isite]+10;
+          esites[nsites++] = isite;
+          echeck[isite] = 1;
+        }
+        }
+        }
+  }
 // Remove mask after second ligand has been removed
-	else if ( element[i] == OZn || element[i] == OHZn || element[i] == OH2Zn ||  element[i] == ZnOH || element[i] == ZnO || element[i] == Zn ){
-	  	for (int n = 0; n < numneigh[i]; n++) {
-      	  	int nn = neighbor[i][n];
+  else if ( element[i] == OAl || element[i] == OHAl  ||  element[i] == AlX || element[i] == Al ){
+      for (int n = 0; n < numneigh[i]; n++) {
+            int nn = neighbor[i][n];
             isite = i2site[nn];
             if (isite >= 0 && echeck[isite] == 0 ) {
                     coord[isite]=coord[isite]+10;
@@ -1320,29 +1231,38 @@ void AppAldZno::remove_mask(int i, int j) // j flag for when Zn densification
                     esites[nsites++] = isite;
                     echeck[isite] = 1;
                 }
-/*				for (int m = 0; m < numneigh[kk]; m++) {
-					int mm = neighbor[kk][m];
-					isite = i2site[mm];
-					if (isite >= 0 && echeck[isite] == 0) { // Cover third neighbour Zn site
-						coord[isite] = coord[isite]+10;
-						esites[nsites++] = isite;
+
+            }
+        }
+  }
+// Al densification
+  else if ( ( element[i] == AlX || element[i] == AlX2 ) && ( element[j] == O || element[j] == OH || element[j] == OH2 )) ){ 
+      echeck[i2site[i]] = 0;
+      for (int n = 0; n < numneigh[j]; n++) {
+          int nn = neighbor[j][n];
+          isite = i2site[nn];
+          if (isite >= 0 && echeck[isite] == 0 ) { // Remove first neighbour Zn site
+              coord[isite]=coord[isite]+10;
+                esites[nsites++] = isite;
+                echeck[isite] = 1;
+            }
+            for (int k = 0; k < numneigh[nn]; k++){
+                int kk = neighbor[nn][k];
+                if(kk != j){
+                    isite = i2site[kk];
+                    if (isite >= 0 && echeck[isite] == 0) { // Remove second neighbour O site
+                        if(isite!=j){coord[isite] = coord[isite]+10;}
+                        esites[nsites++] = isite;
                         echeck[isite] = 1;
                     }
-                    for (int s = 0; s < numneigh[mm]; s++) {
-                        int ss = neighbor[mm][s];
-                        isite = i2site[ss];
-                        if (isite >= 0 && echeck[isite] == 0) { // Cover fourth neighbour O site
-                            coord[isite] = coord[isite]+10;
-                            esites[nsites++] = isite;
-                            echeck[isite] = 1;
-                        }
-                    }
                 }
-*/            }
+
+            }
         }
-	}
+    }
+
 // Remove mask after reverse densification
-    else if ( element[i] == VACANCY && ( element[j] == ZnXOH || element[j] == ZnXO )){
+  else if ( ( element[i] == VACANCY ) && ( element[j] >= AlX2O && element[j] <= AlOH2)){
         for (int n = 0; n < numneigh[i]; n++) {
             int nn = neighbor[i][n];
             isite = i2site[nn];
@@ -1359,29 +1279,12 @@ void AppAldZno::remove_mask(int i, int j) // j flag for when Zn densification
                     esites[nsites++] = isite;
                     echeck[isite] = 1;
                 }
-/*				for (int m = 0; m < numneigh[kk]; m++) {
-					int mm = neighbor[kk][m];
-					isite = i2site[mm];
-					if (isite >= 0 && echeck[isite] == 0) { // Cover third neighbour Zn site
-                        coord[isite] = coord[isite]+10;
-                        esites[nsites++] = isite;
-                        echeck[isite] = 1;
-                    }
-                    for (int s = 0; s < numneigh[mm]; s++) {
-						int ss = neighbor[mm][s];
-						isite = i2site[ss];
-						if (isite >= 0 && echeck[isite] == 0) { // Cover fourth neighbour O site
-                            coord[isite] = coord[isite]+10;
-                            esites[nsites++] = isite;
-                            echeck[isite] = 1;
-                        }
-                    }
-                }
-*/            }
+
+            }
         }
     }
-      
-	  	for (int m = 0; m < nsites; m++)  {echeck[esites[m]] = 0; esites[m]=0;}
+
+  for (int m = 0; m < nsites; m++)  {echeck[esites[m]] = 0; esites[m]=0;}
 }
 
 /* ----------------------------------------------------------------------
@@ -1391,72 +1294,67 @@ void AppAldZno::remove_mask(int i, int j) // j flag for when Zn densification
 
 void AppAldZno::count_coord(int i, int j) // i: Oxygen species, j: Zinc species (does not necessarily hold)
 {
-// Densification of ZnXOH, ZnXO -> ZnX
-    if (( element[i] == O || element[i] == OH || element[i] == OH2 ) &&  ( element[j] == ZnX )  ){
-			coord[j]=coord[j]+1; // Add one because of X ligand
-			for (int s = 0; s < numneigh[j]; s++){
-				int nn = neighbor[j][s];
-				if (element[nn] >= O && element[nn] <= ZnOH ) { // Check if neighbouring site is an oxygen site
-					coord[j]=coord[j] + 1;
-					if (i != nn){ coord[nn]=coord[nn]+1; } // Careful not to change the cn of original site
-				}
-			}
-    }
-// Densification of ZnOH, ZnO -> Zn
-    else if (( element[i] == O || element[i] == OH || element[i] == OH2 ) &&  ( element[j] == Zn )  ){
-        for (int s = 0; s < numneigh[j]; s++){
-                int nn = neighbor[j][s];
-                if (element[nn] >= O && element[nn] <= ZnOH ) { // Check if neighbouring site is an oxygen site
-                        coord[j]=coord[j] + 1;
-                        if (i != nn){ coord[nn]=coord[nn]+1; }
-                }
+
+// Densification Al
+  if (( element[i] == O || element[i] == OH || element[i] == OH2 ) &&  ( element[j] == Al || element[j] == AlX || element[j] == AlX2)  ){
+      if (element[j] == AlX || element[j] == AlX2){
+        coord[j]=coord[j]+1; // Add one because of X ligand
+      }
+      for (int s = 0; s < numneigh[j]; s++){
+        int nn = neighbor[j][s];
+        if (element[nn] >= O && element[nn] <= AlOH2 ) { // Check if neighbouring site is an oxygen site
+          coord[j]=coord[j] + 1;
+          if (i != nn){ coord[nn]=coord[nn]+1; } // Careful not to change the cn of original site
         }
+      }
     }
-// Densification of oxygen-species
-    else if (( element[i] == ZnX || element[i] == Zn ) &&  ( element[j] == O || element[j] == OH || element[j] == OH2 )  ){
-        for (int s = 0; s < numneigh[j]; s++){
-                int nn = neighbor[j][s];
-                if ( Zn <= element[nn] && element[nn] <= OZn) { // Check if neighbouring site is an zinc site
-                        coord[j]=coord[j] + 1;
-                        if (i != nn){ coord[nn]=coord[nn]+1; 
-//                            if(element[nn] == Zn and coord[nn] > 4){printf("i: %d %d %d j: %d %d %d nn: %d %d %d\n", i, element[i], coord[i], j, element[j], coord[j], nn, element[nn], coord[nn]);}
-                        }
-                }
+// Desorption of OH2, event 1 and 3
+  else if ( element[i] == VACANCY  && ( j == -1 ) ){
+        for (int s = 0; s < numneigh[i]; s++){
+            int nn = neighbor[i][s];
+            if ( element[nn] >= Al && element[nn] <= OAlX2 ) { // Check if neighbouring site is a Al site
+                coord[i]=coord[i] - 1;
+                if (i != nn){ coord[nn]=coord[nn] - 1;}
+            }
         }
     }
 // Reverse densification on ZnX
-    else if ( element[i] == VACANCY  && (element[j] >= ZnXO && element[j] <= ZnOH ) ){
-        if ( element[j] == ZnXO || element[j] == ZnXOH ){ coord[i]=coord[i] - 1; } // Remove the extra cn from ligand
+  else if ( element[i] == VACANCY  && (element[j] >= AlX2O && element[j] <= AlOH2 ) ){
+        if ( element[j] == AlO || element[j] == AlOH || element[j] == AlOH2 ){ 
+          coord[i]=coord[i] - 0; 
+          } 
+        else { coord[i]=coord[i] - 1; } // Remove the extra cn from ligand
+
         for (int s = 0; s < numneigh[i]; s++){
             int nn = neighbor[i][s];
-            if ( element[nn] >= O && element[nn] <= ZnOH ) { // Check if neighbouring site is an oxygen site
+            if ( element[nn] >= O && element[nn] <= AlOH2 ) { // Check if neighbouring site is an oxygen site
                 coord[i]=coord[i] - 1;
                 if (j != nn){ coord[nn]=coord[nn] - 1;
                 }
             }
         }
     }
-// Desorption of OH2, event 1 and 3
-    else if ( element[i] == VACANCY  && ( j == -1 || element[j] == ZnX ) ){
-        for (int s = 0; s < numneigh[i]; s++){
-            int nn = neighbor[i][s];
-            if ( element[nn] >= Zn && element[nn] <= OZn ) { // Check if neighbouring site is a zinc site
-                coord[i]=coord[i] - 1;
-                if (i != nn){ coord[nn]=coord[nn] - 1;}
-            }
+// Densification of oxygen-species
+  else if (( element[i] == Al || element[i] == AlX || element[i] == AlX2) &&  ( element[j] == O || element[j] == OH || element[j] == OH2 )  ){
+        for (int s = 0; s < numneigh[j]; s++){
+                int nn = neighbor[j][s];
+                if ( element[nn] >= Al && element[nn] <= OAlX2) { // Check if neighbouring site is an Al site
+                        coord[j]=coord[j] + 1;
+                        if (i != nn){ coord[nn]=coord[nn]+1; 
+                        }
+                }
         }
     }
 // Reverse densification of OH2 / OH / O
-    else if ( element[i] == VACANCY  && ( element[j] == OH2ZnX || element[j] == OH2Zn || element[j] == OHZnX || element[j] == OHZn || element[j] == OZn) ){
+  else if ( element[i] == VACANCY  && ( element[j] >= OH2Al && element[j] <= OAlX2) ){
         for (int s = 0; s < numneigh[i]; s++){
             int nn = neighbor[i][s];
-            if ( element[nn] >= Zn && element[nn] <= OZn ) { // Check if neighbouring site is a zinc site
+            if ( element[nn] >= Al && element[nn] <= OAlX2 ) { // Check if neighbouring site is a Al site
                 coord[i]=coord[i] - 1;
                 if (i != nn){ coord[nn]=coord[nn] - 1;}
             }
         }
     }
-
 }
 
 /* ----------------------------------------------------------------------
@@ -1471,21 +1369,21 @@ void AppAldZno::count_coordO(int i)
     int isite = i2site[i];
     int nsites = 0;
 
-	for (int m = 0; m < numneigh[i]; m++) {
-		int mm = neighbor[i][m];
-		for (int s = 0; s < numneigh[mm]; s++) {
-			int ss = neighbor[mm][s];
-			isite = i2site[ss];
-			if (i==ss)  continue;
-			if (isite >= 0 && echeck[isite] == 0) {
-			  if ( element[ss] >= O && element[ss] <= ZnOH ) {fullO++;}
-			  else if (element[ss] == VACANCY) {emptyO++;}
-		          esites[nsites++] = isite;
-		          echeck[isite] = 1;
-		        }
+  for (int m = 0; m < numneigh[i]; m++) {
+    int mm = neighbor[i][m];
+    for (int s = 0; s < numneigh[mm]; s++) {
+      int ss = neighbor[mm][s];
+      isite = i2site[ss];
+      if (i==ss)  continue;
+      if (isite >= 0 && echeck[isite] == 0) {
+        if ( element[ss] >= O && element[ss] <= AlOH2 ) {fullO++;}
+        else if (element[ss] == VACANCY) {emptyO++;}
+              esites[nsites++] = isite;
+              echeck[isite] = 1;
+            }
     
-		}
-	}
+    }
+  }
    totalS = fullO+emptyO;
    if ( float(fullO) > 4*totalS/5 and coord[i] > -20) {coord[i] += -20;} // decrease the coord of the oxygen site to render it inactive for adsorption
    for (int m = 0; m < nsites; m++)  {echeck[esites[m]] = 0; esites[m]=0;}

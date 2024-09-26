@@ -1,7 +1,7 @@
+#include "diag_ald_al2o3.h"
 #include "diag_ald.h"
 #include "diag_ald_ta2o5.h"
 #include "diag_ald_zno.h"
-#include "diag_ald_al2o3.h"
 #include "diag_array.h"
 #include "diag_cluster.h"
 #include "diag_diffusion.h"

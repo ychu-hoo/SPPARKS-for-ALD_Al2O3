@@ -88,7 +88,7 @@ DiagAldAl2o3::~DiagAldAl2o3()
 
 void DiagAldAl2o3::init()
 {
-  appaldal2o3 = (DiagAldAl2o3 *) app;
+  appaldal2o3 = (AppAldAl2o3 *) app;
   
   int none = appaldal2o3->none;
   int ntwo = appaldal2o3->ntwo;
@@ -202,7 +202,7 @@ void DiagAldAl2o3::compute()
     else if (which[i] == OAlX) ivalue = sites[OAlX];
     else if (which[i] == OAlX2) ivalue = sites[OAlX2];
     else if (which[i] == QCM) ivalue = 18.02*sites[OH2] + 17.01*sites[OH] + 15.99*sites[O] + 88.09*sites[AlX3O] + 89.09*sites[AlX3OH] + 90.10*sites[AlX3OH2] + 73.05*sites[AlX2O] + 74.06*sites[AlX2OH] + 75.07*sites[AlX2OH2] + 58.02*sites[AlXO] + 59.02*sites[AlXOH] + 60.03*sites[AlXOH2] + 42.98*sites[AlO] + 43.99*sites[AlOH] + 44.99*sites[AlOH2] + 26.98*sites[Al] + 42.02*sites[AlX] + 57.05*sites[AlX2] + 44.99*sites[OH2Al] + 60.03*sites[OH2AlX] + 75.07*sites[OH2AlX2] + 43.99*sites[OHAl] + 59.02*sites[OHAlX] + 74.06*sites[OHAlX2] + 42.98*sites[OAl] + 58.02*sites[OAlX] + 73.05*sites[OAlX2];
-    else if (which[i] == LIGANDS) ivalue = 3*(sites[AlX3O]+sites[AlX3OH]+sites[AlX3OH2])+2*(sites[AlX2O]+sites[AlX2OH]+sites[AlX2OH2])+(sites[AlXO]+sites[AlXOH]+sites[AlXOH2])+(sites[AlX]+sites[OH2AlX]+sites[OHAlX]+sites[OAlX])+2*(sites[AlX2]+sites[OH2AlX2]+sites[OHAlX2]+sites[OAlX2])
+    else if (which[i] == LIGANDS) ivalue = 3*(sites[AlX3O]+sites[AlX3OH]+sites[AlX3OH2])+2*(sites[AlX2O]+sites[AlX2OH]+sites[AlX2OH2])+(sites[AlXO]+sites[AlXOH]+sites[AlXOH2])+(sites[AlX]+sites[OH2AlX]+sites[OHAlX]+sites[OAlX])+2*(sites[AlX2]+sites[OH2AlX2]+sites[OHAlX2]+sites[OAlX2]);
     else if (which[i] == EVENTS) ivalue = appaldal2o3->nevents;
     else if (which[i] == ONE) ivalue = appaldal2o3->scount[index[i]];
     else if (which[i] == TWO) ivalue = appaldal2o3->dcount[index[i]];

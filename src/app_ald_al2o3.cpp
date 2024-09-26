@@ -970,7 +970,7 @@ void AppAldAl2o3::update_coord(int elcoord, int i, int j, int k, int which)
   }
   // water desorption typeII no
   else if ((elcoord == OH2) && (element[i] == VACANCY) && ( j == -1 )) {
-    count_coord(i);
+    count_coord(i,j);
   }  
   // Ligand-exchange reactions during water pulse
   else if ((elcoord == OH2 || elcoord == OH) && (element[i] == OH || element[i] == O) && (element[j] == AlX || element[j] == Al)) {
@@ -1000,7 +1000,7 @@ void AppAldAl2o3::update_coord(int elcoord, int i, int j, int k, int which)
     }
     count_coord(j, i);
     if (element[i] == AlX || element[i] == AlX2){
-      put_mask(i)
+      put_mask(i);
     }
   }
   // Al reverse densification
@@ -1029,15 +1029,15 @@ void AppAldAl2o3::update_coord(int elcoord, int i, int j, int k, int which)
   else if ((elcoord == O || elcoord == OH || elcoord == OH2) && (element[i] == VACANCY) && (element[j] == OAl || element[j] == OHAl || element[j] == OH2Al)) {
     count_coord(i, j);
     // count_coordO(j);
-    coord[j] = coord[j] + 1
+    coord[j] = coord[j] + 1;
   }
   else if ((elcoord == O || elcoord == OH || elcoord == OH2) && (element[i] == VACANCY) && (element[j] == OAlX || element[j] == OHAlX || element[j] == OH2AlX)) {
     count_coord(i, j);
-    coord[j] = coord[j] + 1
+    coord[j] = coord[j] + 1;
   }
   else if ((elcoord == O || elcoord == OH || elcoord == OH2) && (element[i] == VACANCY) && (element[j] == OAlX2 || element[j] == OHAlX2 || element[j] == OH2AlX2)) {
     count_coord(i, j);
-    coord[j] = coord[j] + 1
+    coord[j] = coord[j] + 1;
   }
 }
 /* ----------------------------------------------------------------------
@@ -1235,7 +1235,7 @@ void AppAldAl2o3::remove_mask(int i, int j) // j flag for when Al densification
         }
   }
 // Al densification
-  else if ( ( element[i] == AlX || element[i] == AlX2 ) && ( element[j] == O || element[j] == OH || element[j] == OH2 )) ){ 
+  else if ( ( element[i] == AlX || element[i] == AlX2 ) && ( element[j] == O || element[j] == OH || element[j] == OH2 )){ 
       echeck[i2site[i]] = 0;
       for (int n = 0; n < numneigh[j]; n++) {
           int nn = neighbor[j][n];

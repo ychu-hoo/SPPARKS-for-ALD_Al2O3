@@ -12,23 +12,23 @@
 ------------------------------------------------------------------------- */
 
 #ifdef APP_CLASS
-AppStyle(ald/zno,AppAldZno)
+AppStyle(ald/al2o3,AppAldAl2o3)
 
 #else
 
-#ifndef SPK_APP_ALD_ZnO_H
-#define SPK_APP_ALD_ZnO_H
+#ifndef SPK_APP_ALD_Al2o3_H
+#define SPK_APP_ALD_Al2o3_H
 
 #include "app_lattice.h"
 
 namespace SPPARKS_NS {
 
-class AppAldZno : public AppLattice {
-  friend class DiagAldZno;
+class AppAldAl2o3 : public AppLattice {
+  friend class DiagAldAl2o3;
 
  public:
-  AppAldZno(class SPPARKS *, int, char **);
-  ~AppAldZno();
+  AppAldAl2o3(class SPPARKS *, int, char **);
+  ~AppAldAl2o3();
   void input_app(char *, int, char **);
   void grow_app();
   void init_app();
@@ -84,7 +84,6 @@ class AppAldZno : public AppLattice {
   void grow_reactions(int);
   void count_coord(int,int);
   void count_coordO(int);
-  void count_coordZn(int);
   void remove_mask(int, int j = 0);
   void put_mask(int);
   void update_coord(int,int,int,int,int);

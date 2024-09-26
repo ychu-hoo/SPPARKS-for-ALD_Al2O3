@@ -12,28 +12,28 @@
 ------------------------------------------------------------------------- */
 
 #ifdef DIAG_CLASS
-DiagStyle(ald/zno,DiagAldZno)
+DiagStyle(ald/al2o3,DiagAldAl2o3)
 
 #else
 
-#ifndef SPK_DIAG_ALD_ZnO_H
-#define SPK_DIAG_ALD_ZnO_H
+#ifndef SPK_DIAG_ALD_Al2o3_H
+#define SPK_DIAG_ALD_Al2o3_H
 
 #include "diag.h"
 
 namespace SPPARKS_NS {
 
-class DiagAldZno : public Diag {
+class DiagAldAl2o3 : public Diag {
  public:
-  DiagAldZno(class SPPARKS *, int, char **);
-  ~DiagAldZno();
+  DiagAldAl2o3(class SPPARKS *, int, char **);
+  ~DiagAldAl2o3();
   void init();
   void compute();
   void stats(char *);
   void stats_header(char *);
 
  private:
-  class AppAldZno *appaldzno;
+  class AppAldAl2o3 *appaldal2o3;
   int nlist;
   char **list;
   int *which,*index,*ivector;

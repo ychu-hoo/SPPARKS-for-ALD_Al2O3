@@ -15,7 +15,7 @@
 #include "mpi.h"
 #include "stdlib.h"
 #include "string.h"
-#include "app_ald_Al2O3.h"
+#include "app_ald_al2o3.h"
 #include "solve.h"
 #include "random_park.h"
 #include "memory.h"
@@ -28,8 +28,7 @@ AlX3O,AlX3OH,AlX3OH2,AlX2O,AlX2OH,AlX2OH2,
 AlXO,AlXOH,AlXOH2,AlO,AlOH,AlOH2,
 Al,AlX,AlX2,
 OH2Al,OH2AlX,OH2AlX2,OHAl,OHAlX,OHAlX2,
-OAl,OAlX,OAlX2
-}
+OAl,OAlX,OAlX2};
 
 // enum{VACANCY,O,OH,// 3
 // OH2, ZnX2O, ZnX2OH, ZnX2OH2, // 7 DEZ adsorption 
@@ -42,7 +41,7 @@ OAl,OAlX,OAlX2
 
 /* ---------------------------------------------------------------------- */
 
-AppAldZno::AppAldZno(SPPARKS *spk, int narg, char **arg) : 
+AppAldAl2o3::AppAldAl2o3(SPPARKS *spk, int narg, char **arg) : 
   AppLattice(spk,narg,arg)
 {
   ninteger = 2;
@@ -86,7 +85,7 @@ AppAldZno::AppAldZno(SPPARKS *spk, int narg, char **arg) :
 
 /* ---------------------------------------------------------------------- */
 
-AppAldZno::~AppAldZno()
+AppAldAl2o3::~AppAldAl2o3()
 {
   delete [] esites;
   delete [] echeck;
@@ -124,7 +123,7 @@ AppAldZno::~AppAldZno()
 
 /* ---------------------------------------------------------------------- */
 
-void AppAldZno::input_app(char *command, int narg, char **arg)
+void AppAldAl2o3::input_app(char *command, int narg, char **arg)
 {
   if (strcmp(command,"event") == 0) {
     if (narg < 1) error->all(FLERR,"Illegal event command E1");
@@ -493,7 +492,7 @@ void AppAldZno::input_app(char *command, int narg, char **arg)
    set site value ptrs each time iarray/darray are reallocated
 ------------------------------------------------------------------------- */
 
-void AppAldZno::grow_app()
+void AppAldAl2o3::grow_app()
 {
   element = iarray[0];
   coord = iarray[1];
@@ -504,7 +503,7 @@ void AppAldZno::grow_app()
    check validity of site values
 ------------------------------------------------------------------------- */
 
-void AppAldZno::init_app()
+void AppAldAl2o3::init_app()
 {
   if (firsttime) {
     firsttime = 0;
@@ -532,7 +531,7 @@ void AppAldZno::init_app()
 }
 /* ---------------------------------------------------------------------- */
 
-void AppAldZno::setup_app()
+void AppAldAl2o3::setup_app()
 {
   for (int i = 0; i < nlocal; i++) echeck[i] = 0;
   
@@ -566,7 +565,7 @@ void AppAldZno::setup_app()
    compute energy of site
 ------------------------------------------------------------------------- */
 
-double AppAldZno::site_energy(int i)
+double AppAldAl2o3::site_energy(int i)
 {
   return 0.0;
 }
@@ -576,7 +575,7 @@ double AppAldZno::site_energy(int i)
    compute total propensity of owned site summed over possible events
 ------------------------------------------------------------------------- */
 
-double AppAldZno::site_propensity(int i)
+double AppAldAl2o3::site_propensity(int i)
 {
   int j,k,m;
 
@@ -651,7 +650,7 @@ double AppAldZno::site_propensity(int i)
    choose and perform an event for site
 ------------------------------------------------------------------------- */
 
-void AppAldZno::site_event(int i, class RandomPark *random)
+void AppAldAl2o3::site_event(int i, class RandomPark *random)
 {
   int j,k,m,n,mm,jj;
 
@@ -788,7 +787,7 @@ void AppAldZno::site_event(int i, class RandomPark *random)
    add cleared events to free list
 ------------------------------------------------------------------------- */
 
-void AppAldZno::clear_events(int i)
+void AppAldAl2o3::clear_events(int i)
 {
   int next;
   int index = firstevent[i];
@@ -807,7 +806,7 @@ void AppAldZno::clear_events(int i)
    event = exchange with site J with probability = propensity
 ------------------------------------------------------------------------- */
 
-void AppAldZno::add_event(int i, int rstyle, int which, double propensity,
+void AppAldAl2o3::add_event(int i, int rstyle, int which, double propensity,
         int jpartner, int kpartner)
 {
   if (nevents == maxevent) {
@@ -837,7 +836,7 @@ void AppAldZno::add_event(int i, int rstyle, int which, double propensity,
    grow list of stored reactions for single and double
 ------------------------------------------------------------------------- */
 
-void AppAldZno::grow_reactions(int rstyle)
+void AppAldAl2o3::grow_reactions(int rstyle)
 {
   if (rstyle == 1) {
     int n = none + 1;
@@ -903,7 +902,7 @@ void AppAldZno::grow_reactions(int rstyle)
 /* ----------------------------------------------------------------------
    update c.n. for Zn and O, put and remove mask for relative sites
 ------------------------------------------------------------------------- */
-void AppAldZno::update_coord(int elcoord, int i, int j, int k, int which)
+void AppAldAl2o3::update_coord(int elcoord, int i, int j, int k, int which)
 {
   // adsorption of TMA yes
   if ((elcoord == O || elcoord == OH || elcoord == OH2) && (element[i] == AlX3O || element[i] == AlX3OH || element[i] == AlX3OH2) && (j == -1)){
@@ -1045,7 +1044,7 @@ void AppAldZno::update_coord(int elcoord, int i, int j, int k, int which)
    put mask for affected sites
 ------------------------------------------------------------------------- */
 
-void AppAldZno::put_mask(int i)
+void AppAldAl2o3::put_mask(int i)
 {
   int isite = i2site[i];
   int nsites = 0;
@@ -1143,7 +1142,7 @@ void AppAldZno::put_mask(int i)
    remove mask 
 ------------------------------------------------------------------------- */
 
-void AppAldZno::remove_mask(int i, int j) // j flag for when Al densification
+void AppAldAl2o3::remove_mask(int i, int j) // j flag for when Al densification
 {
   int isite = i2site[i];
   int nsites = 0;
@@ -1292,7 +1291,7 @@ void AppAldZno::remove_mask(int i, int j) // j flag for when Al densification
 ------------------------------------------------------------------------- */
 
 
-void AppAldZno::count_coord(int i, int j) // i: Oxygen species, j: Zinc species (does not necessarily hold)
+void AppAldAl2o3::count_coord(int i, int j) // i: Oxygen species, j: Zinc species (does not necessarily hold)
 {
 
 // Densification Al
@@ -1360,7 +1359,7 @@ void AppAldZno::count_coord(int i, int j) // i: Oxygen species, j: Zinc species 
 /* ----------------------------------------------------------------------
    count c.n of oxygen before adsorption
 ------------------------------------------------------------------------- */
-void AppAldZno::count_coordO(int i)
+void AppAldAl2o3::count_coordO(int i)
 {
     int fullO = 0;
     int emptyO = 0;

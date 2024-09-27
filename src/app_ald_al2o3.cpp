@@ -1212,28 +1212,6 @@ void AppAldAl2o3::remove_mask(int i, int j) // j flag for when Al densification
         }
         }
   }
-// Remove mask after second ligand has been removed
-  else if ( element[i] == OAl || element[i] == OHAl  ||  element[i] == AlX || element[i] == Al ){
-      for (int n = 0; n < numneigh[i]; n++) {
-            int nn = neighbor[i][n];
-            isite = i2site[nn];
-            if (isite >= 0 && echeck[isite] == 0 ) {
-                    coord[isite]=coord[isite]+10;
-                    esites[nsites++] = isite;
-                    echeck[isite] = 1;
-            }
-            for (int k = 0; k < numneigh[nn]; k++){
-                int kk = neighbor[nn][k];
-                isite = i2site[kk];
-                if (isite >= 0 && echeck[isite] == 0) {
-                    coord[isite] = coord[isite]+10;
-                    esites[nsites++] = isite;
-                    echeck[isite] = 1;
-                }
-
-            }
-        }
-  }
 // Al densification
   else if ( ( element[i] == AlX || element[i] == AlX2 ) && ( element[j] == O || element[j] == OH || element[j] == OH2 )){ 
       echeck[i2site[i]] = 0;
@@ -1259,6 +1237,30 @@ void AppAldAl2o3::remove_mask(int i, int j) // j flag for when Al densification
             }
         }
     }
+
+// Remove mask after second ligand has been removed
+  else if ( element[i] == OAl || element[i] == OHAl  ||  element[i] == AlX || element[i] == Al ){
+      for (int n = 0; n < numneigh[i]; n++) {
+            int nn = neighbor[i][n];
+            isite = i2site[nn];
+            if (isite >= 0 && echeck[isite] == 0 ) {
+                    coord[isite]=coord[isite]+10;
+                    esites[nsites++] = isite;
+                    echeck[isite] = 1;
+            }
+            for (int k = 0; k < numneigh[nn]; k++){
+                int kk = neighbor[nn][k];
+                isite = i2site[kk];
+                if (isite >= 0 && echeck[isite] == 0) {
+                    coord[isite] = coord[isite]+10;
+                    esites[nsites++] = isite;
+                    echeck[isite] = 1;
+                }
+
+            }
+        }
+  }
+
 
 // Remove mask after reverse densification
   else if ( ( element[i] == VACANCY ) && ( element[j] >= AlX2O && element[j] <= AlOH2)){
